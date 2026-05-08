@@ -16,15 +16,25 @@ exports.handler = async (event) => {
   if (notes.length > 3000)
     return { statusCode: 400, body: JSON.stringify({ error: "Notes exceed 3000 character limit" }) };
 
-  const prompt = `You are a recruitment assistant. Extract three specific pieces of information from these raw recruiter notes about a candidate interview.
+  const prompt = `You are a recruitment assistant. Extract three pieces of information from these raw recruiter notes and phrase them so they read naturally inside the exact email sentences shown below.
 
 Notes: "${notes}"
 
+The three fields slot into the email like this:
+- "I thought that you [P]." → P must be a past-tense verb phrase, e.g. "demonstrated strong analytical thinking"
+- "someone that can demonstrate [AI]." → AI must be a noun phrase, e.g. "clear stakeholder communication"
+- "I would suggest [D]." → D must be a gerund phrase, e.g. "seeking out cross-functional projects to practise presenting findings to non-technical audiences"
+
+Rules:
+- Each field starts lowercase and has no full stop
+- Be specific — draw directly from the notes, don't generalise
+- The completed sentences must read as natural, grammatically correct English
+
 Respond ONLY with a valid JSON object, no preamble, no markdown backticks:
 {
-  "P": "a specific positive quality or strength observed (1 short phrase, starting lowercase, no full stop)",
-  "AI": "a specific area for improvement or skill gap (1 short phrase, starting lowercase, no full stop)",
-  "D": "one concrete development suggestion or action they could take (1 short sentence, starting lowercase, no full stop)"
+  "P": "...",
+  "AI": "...",
+  "D": "..."
 }
 
 If the notes are too vague to extract a field, use null for that field.`;
