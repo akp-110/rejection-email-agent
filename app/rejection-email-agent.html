@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rejection Email Agent</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.30.0/dist/tabler-icons.min.css" />
+  <link rel="stylesheet" href="rejection-email-agent.css" />
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>Rejection Email Agent</h1>
+    <p>Select a candidate record, paste raw recruiter notes, and let the agent parse the positive, area for improvement, and development tip — then preview the completed email.</p>
+  </header>
+
+  <!-- API key notice -->
+  <div class="api-notice">
+    <i class="ti ti-info-circle" style="font-size:16px; flex-shrink:0; margin-top:1px;" aria-hidden="true"></i>
+    <span>
+      API calls are routed through a Netlify serverless function. Set <code>ANTHROPIC_API_KEY</code> in your Netlify site's environment variables, or in <code>.env</code> for local development with <code>netlify dev</code>.
+    </span>
+  </div>
+
+  <!-- Step 1 -->
+  <div class="section-label">1 — select candidate record</div>
+  <div class="candidate-grid" id="candidateGrid"></div>
+
+  <!-- Step 2 -->
+  <div class="section-label">2 — recruiter notes</div>
+  <div class="card" style="padding:0.75rem; margin-bottom:1rem;">
+    <textarea
+      id="notesInput"
+      placeholder="Paste raw interview notes here… e.g. 'Really strong communication, asked great questions. Struggled with the SQL task, didn't seem comfortable with joins. Would suggest doing some SQL practice on Mode or StrataScratch.'"
+    ></textarea>
+  </div>
+
+  <!-- Parse button + status -->
+  <div class="action-row">
+    <button class="parse-btn" id="parseBtn" onclick="runParse()" disabled>
+      <i class="ti ti-sparkles" aria-hidden="true"></i>
+      Parse notes
+    </button>
+    <select class="model-select" id="modelSelect">
+      <option value="claude-haiku-4-5-20251001">Haiku 4.5 — fast</option>
+      <option value="claude-sonnet-4-6" selected>Sonnet 4.6 — balanced</option>
+      <option value="claude-opus-4-7">Opus 4.7 — powerful</option>
+    </select>
+    <div class="status-row">
+      <div class="dot" id="statusDot"></div>
+      <span id="statusText">Select a candidate to begin</span>
+    </div>
+  </div>
+
+  <!-- Step 3 -->
+  <div class="section-label">3 — extracted fields</div>
+  <div class="fields-grid">
+    <div class="field-card">
+      <div class="field-tag p">P — positive</div>
+      <div class="field-val empty" id="fieldP">Not yet parsed</div>
+    </div>
+    <div class="field-card">
+      <div class="field-tag ai">AI — area for improvement</div>
+      <div class="field-val empty" id="fieldAI">Not yet parsed</div>
+    </div>
+    <div class="field-card">
+      <div class="field-tag d">D — development tip</div>
+      <div class="field-val empty" id="fieldD">Not yet parsed</div>
+    </div>
+  </div>
+
+  <hr />
+
+  <!-- Step 4 -->
+  <div class="section-label">4 — email preview</div>
+  <div class="email-preview" id="emailPreview">
+    <p class="empty-state">Select a candidate and parse notes to see the completed email.</p>
+  </div>
+
+</div>
+
+<!-- Signup modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal-card">
+    <div class="modal-eyebrow">Free trial complete</div>
+    <h2 class="modal-title">3 of 3 parses used</h2>
+    <p class="modal-body">Enter your email to keep using the Rejection Email Agent. No password, no spam.</p>
+    <input type="email" id="signupEmail" class="modal-input" placeholder="you@company.com" autocomplete="email" />
+    <button class="modal-btn" onclick="handleSignup()">Continue</button>
+  </div>
+</div>
+
+<script src="rejection-email-agent.js"></script>
+</body>
+</html>

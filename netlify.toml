@@ -1,0 +1,20 @@
+[build]
+  publish = "app"
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/"
+  to = "/rejection-email-agent.html"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/api/parse"
+  to = "/.netlify/functions/parse"
+  status = 200
