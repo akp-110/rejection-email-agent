@@ -18,3 +18,8 @@
   from = "/api/parse"
   to = "/.netlify/functions/parse"
   status = 200
+
+[[redirects]]
+  from = "/api/ocr"
+  to = "/.netlify/functions/ocr"
+  status = 200
