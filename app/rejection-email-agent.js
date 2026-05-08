@@ -189,7 +189,7 @@ async function runParse() {
     const res = await fetch("/api/parse", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ notes, model: document.getElementById("modelSelect").value })
+      body: JSON.stringify({ notes })
     });
 
     const result = await res.json();

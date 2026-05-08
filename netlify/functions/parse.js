@@ -3,19 +3,14 @@ exports.handler = async (event) => {
     return { statusCode: 405, body: "Method Not Allowed" };
   }
 
-  const ALLOWED_MODELS = new Set([
-    "claude-haiku-4-5-20251001",
-    "claude-sonnet-4-6",
-  ]);
+  const MODEL = "claude-haiku-4-5-20251001";
 
-  let notes, model;
+  let notes;
   try {
-    ({ notes, model } = JSON.parse(event.body));
+    ({ notes } = JSON.parse(event.body));
   } catch {
     return { statusCode: 400, body: JSON.stringify({ error: "Invalid request body" }) };
   }
-
-  if (!ALLOWED_MODELS.has(model)) model = "claude-sonnet-4-6";
   if (!notes || typeof notes !== "string" || notes.trim().length === 0)
     return { statusCode: 400, body: JSON.stringify({ error: "Notes are required" }) };
   if (notes.length > 3000)
@@ -42,7 +37,7 @@ If the notes are too vague to extract a field, use null for that field.`;
       "anthropic-version": "2023-06-01"
     },
     body: JSON.stringify({
-      model,
+      model: MODEL,
       max_tokens: 300,
       messages: [{ role: "user", content: prompt }]
     })
