@@ -20,33 +20,37 @@ exports.handler = async (event) => {
   if (image.length > MAX_BASE64_LENGTH)
     return { statusCode: 400, body: JSON.stringify({ error: "Image exceeds 5 MB limit" }) };
 
-  const res = await fetch("https://api.anthropic.com/v1/messages", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "x-api-key": process.env.ANTHROPIC_API_KEY,
-      "anthropic-version": "2023-06-01"
-    },
-    body: JSON.stringify({
-      model: "claude-haiku-4-5-20251001",
-      max_tokens: 1024,
-      messages: [{
-        role: "user",
-        content: [
-          {
-            type: "image",
-            source: { type: "base64", media_type: mediaType, data: image }
-          },
-          {
-            type: "text",
-            text: "Transcribe all handwritten or printed text in this image exactly as written. Output plain text only, preserving line breaks. Do not add commentary, labels, or formatting."
-          }
-        ]
-      }]
-    })
-  });
-
-  const data = await res.json();
+  let res, data;
+  try {
+    res = await fetch("https://api.anthropic.com/v1/messages", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "x-api-key": process.env.ANTHROPIC_API_KEY,
+        "anthropic-version": "2023-06-01"
+      },
+      body: JSON.stringify({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 4096,
+        messages: [{
+          role: "user",
+          content: [
+            {
+              type: "image",
+              source: { type: "base64", media_type: mediaType, data: image }
+            },
+            {
+              type: "text",
+              text: "Transcribe all handwritten or printed text in this image exactly as written. Output plain text only, preserving line breaks. Do not add commentary, labels, or formatting."
+            }
+          ]
+        }]
+      })
+    });
+    data = await res.json();
+  } catch (err) {
+    return { statusCode: 502, body: JSON.stringify({ error: "Upstream request failed" }) };
+  }
 
   if (!res.ok) {
     return {
