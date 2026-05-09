@@ -1,12 +1,30 @@
 // Mock candidate database.
 // In production, swap this for a Greenhouse API call.
 const candidates = [
-  { id: "REC-2847", name: "James Okafor",   role: "Customer Success Exec" },
-  { id: "REC-3012", name: "Priya Sharma",   role: "Data Analyst" },
-  { id: "REC-3156", name: "Tom Baxter",     role: "Sales Development Rep" },
-  { id: "REC-3289", name: "Lena Müller",    role: "Product Manager" },
-  { id: "REC-3301", name: "Dan Whitfield",  role: "Backend Engineer" },
-  { id: "REC-3378", name: "Aisha Conteh",   role: "Marketing Executive" },
+  {
+    id: "REC-2847", name: "James Okafor", role: "Customer Success Exec",
+    notes: "Really warm and personable, built rapport quickly. Great at telling customer stories and showed genuine empathy. Struggled to give specific metrics around retention or upsell — a lot of vague answers when pushed on numbers. Would benefit from preparing a couple of data-backed examples before his next process.",
+  },
+  {
+    id: "REC-3012", name: "Priya Sharma", role: "Data Analyst",
+    notes: "Strong SQL fundamentals, talked through her query logic clearly. Presentation was well structured. Confidence dipped when asked about stakeholder management — felt like she's used to working heads-down rather than communicating findings upward. Suggest she seeks out more cross-functional projects or practice presenting to non-technical audiences.",
+  },
+  {
+    id: "REC-3156", name: "Tom Baxter", role: "Sales Development Rep",
+    notes: "High energy, clearly loves the hustle. Good understanding of outbound sequencing and objection handling. Got a bit flustered during the roleplay when the prospect pushed back hard — needs to work on staying composed under pressure. Cold call coaching or a rejection training programme would really help him.",
+  },
+  {
+    id: "REC-3289", name: "Lena Müller", role: "Product Manager",
+    notes: "Impressive product thinking, asked sharp clarifying questions in the case study. Roadmap prioritisation answer was excellent. Weaker on the engineering collaboration side — couldn't give a strong example of navigating technical debt conversations with a dev team. Worth reading up on agile rituals and practicing that framing before her next PM interview.",
+  },
+  {
+    id: "REC-3301", name: "Dan Whitfield", role: "Backend Engineer",
+    notes: "Solid on system design, talked confidently about distributed systems and trade-offs. Got caught out on the debugging exercise — took a long time and skipped writing tests entirely. Testing discipline and debugging under time pressure are the gaps. LeetCode is fine but suggest focusing on test-driven development practice specifically.",
+  },
+  {
+    id: "REC-3378", name: "Aisha Conteh", role: "Marketing Executive",
+    notes: "Creative thinker with a strong portfolio — the campaign examples she brought were genuinely impressive. Struggled on the analytics side, couldn't speak to CAC or attribution models clearly. For a role that's increasingly data-driven this was a gap. Suggest she gets hands-on with GA4 or HubSpot reporting to build that side up.",
+  },
 ];
 
 let selected = null;
@@ -280,6 +298,7 @@ function selectCandidate(i) {
   parsed = { P: null, AI: null, D: null };
   resetFields();
   document.getElementById("parseBtn").disabled = false;
+  document.getElementById("notesInput").value = selected.notes || "";
   setStatus("green", `${selected.name} selected · ${selected.id}`);
   renderEmail();
 }
