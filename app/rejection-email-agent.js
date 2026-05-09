@@ -57,6 +57,30 @@ function setActiveTemplate(id) {
   renderEmail();
 }
 
+function buildTemplatePills() {
+  const container = document.getElementById("templatePills");
+  const editBtn   = document.getElementById("editTemplateBtn");
+  container.replaceChildren();
+
+  getTemplates().forEach(t => {
+    const pill = document.createElement("button");
+    pill.className = "template-pill" + (t.id === activeTemplateId ? " active" : "");
+    pill.textContent = t.name;
+    pill.addEventListener("click", () => setActiveTemplate(t.id));
+    container.appendChild(pill);
+  });
+
+  const newPill = document.createElement("button");
+  newPill.className = "template-pill new";
+  newPill.textContent = "+ New";
+  newPill.addEventListener("click", createTemplate);
+  container.appendChild(newPill);
+
+  const isDefault = activeTemplateId === "default";
+  editBtn.textContent = isDefault ? "Duplicate" : "Edit";
+  editBtn.onclick = isDefault ? createTemplate : () => openEditor(activeTemplateId);
+}
+
 // ─── Usage & limits ──────────────────────────────
 const TRIAL_LIMIT = 3;
 const DAILY_LIMIT = 20;
@@ -349,4 +373,6 @@ document.getElementById("photoInput")?.addEventListener("change", async (e) => {
 });
 
 buildCandidateGrid();
+buildTemplatePills();
+document.getElementById("templateBodyInput")?.addEventListener("input", onTemplateBodyInput);
 renderEmail();
