@@ -66,7 +66,13 @@
   <hr />
 
   <!-- Step 4 -->
-  <div class="section-label">4 — email preview</div>
+  <div class="section-label-row">
+    <div class="section-label">4 — email preview</div>
+    <button class="copy-btn" id="copyBtn" onclick="copyEmail()" style="display:none">
+      <i class="ti ti-copy" aria-hidden="true"></i>
+      Copy email
+    </button>
+  </div>
   <div class="email-preview" id="emailPreview">
     <p class="empty-state">Select a candidate and parse notes to see the completed email.</p>
   </div>
