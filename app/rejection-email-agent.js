@@ -123,7 +123,7 @@ function validateTemplateUI(body) {
     el.textContent = "All tokens present";
     el.className = "template-validation ok";
   } else {
-    el.textContent = "Missing: " + missing.join(", ");
+    el.textContent = "Missing " + missing.join(" ");
     el.className = "template-validation warn";
   }
 }
