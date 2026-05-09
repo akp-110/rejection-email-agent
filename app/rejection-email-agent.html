@@ -68,11 +68,37 @@
   <!-- Step 4 -->
   <div class="section-label-row">
     <div class="section-label">4 — email preview</div>
-    <button class="copy-btn" id="copyBtn" onclick="copyEmail()" style="display:none">
-      <i class="ti ti-copy" aria-hidden="true"></i>
-      Copy email
-    </button>
+    <div class="template-actions">
+      <div class="template-pills" id="templatePills"></div>
+      <div class="template-divider"></div>
+      <button class="copy-btn" id="editTemplateBtn"></button>
+      <button class="copy-btn" id="copyBtn" onclick="copyEmail()" style="display:none">
+        <i class="ti ti-copy" aria-hidden="true"></i>
+        Copy email
+      </button>
+    </div>
   </div>
+
+  <!-- Template editor panel -->
+  <div class="template-editor" id="templateEditor" style="display:none">
+    <div class="template-editor-header">
+      <input class="template-name-input" id="templateNameInput" type="text" placeholder="Template name" />
+      <div class="token-chips">
+        <span class="token-chip green" onclick="insertToken('{P}')">{P}</span>
+        <span class="token-chip amber" onclick="insertToken('{AI}')">{AI}</span>
+        <span class="token-chip blue" onclick="insertToken('{D}')">{D}</span>
+        <span class="token-chip" onclick="insertToken('{name}')">{name}</span>
+        <span class="token-chip" onclick="insertToken('{role}')">{role}</span>
+      </div>
+    </div>
+    <textarea id="templateBodyInput"></textarea>
+    <div class="template-editor-footer">
+      <button class="template-delete-btn" id="deleteTemplateBtn" onclick="deleteCurrentTemplate()">Delete</button>
+      <span class="template-validation" id="templateValidation"></span>
+      <button class="copy-btn" onclick="saveCurrentTemplate()">Done</button>
+    </div>
+  </div>
+
   <div class="email-preview" id="emailPreview">
     <p class="empty-state">Select a candidate and parse notes to see the completed email.</p>
   </div>
