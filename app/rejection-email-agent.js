@@ -81,6 +81,106 @@ function buildTemplatePills() {
   editBtn.onclick = isDefault ? createTemplate : () => openEditor(activeTemplateId);
 }
 
+function openEditor(id) {
+  const t = getTemplates().find(t => t.id === id);
+  if (!t) return;
+  editingTemplateId = id;
+  document.getElementById("templateNameInput").value = t.name;
+  document.getElementById("templateBodyInput").value = t.body;
+  document.getElementById("deleteTemplateBtn").style.display = t.protected ? "none" : "";
+  validateTemplateUI(t.body);
+  document.getElementById("templateEditor").style.display = "";
+  document.getElementById("templateNameInput").focus();
+}
+
+function closeEditor() {
+  document.getElementById("templateEditor").style.display = "none";
+  editingTemplateId = null;
+  deleteConfirmPending = false;
+  const btn = document.getElementById("deleteTemplateBtn");
+  btn.textContent = "Delete";
+  btn.classList.remove("danger");
+}
+
+function insertToken(token) {
+  const ta    = document.getElementById("templateBodyInput");
+  const start = ta.selectionStart;
+  const end   = ta.selectionEnd;
+  ta.value = ta.value.slice(0, start) + token + ta.value.slice(end);
+  ta.selectionStart = ta.selectionEnd = start + token.length;
+  ta.focus();
+  validateTemplateUI(ta.value);
+}
+
+function validateTemplate(body) {
+  return ["{P}", "{AI}", "{D}"].filter(tok => !body.includes(tok));
+}
+
+function validateTemplateUI(body) {
+  const missing = validateTemplate(body);
+  const el = document.getElementById("templateValidation");
+  if (missing.length === 0) {
+    el.textContent = "All tokens present";
+    el.className = "template-validation ok";
+  } else {
+    el.textContent = "Missing: " + missing.join(", ");
+    el.className = "template-validation warn";
+  }
+}
+
+function onTemplateBodyInput() {
+  validateTemplateUI(document.getElementById("templateBodyInput").value);
+}
+
+function saveCurrentTemplate() {
+  const name   = document.getElementById("templateNameInput").value.trim() || "Untitled";
+  const body   = document.getElementById("templateBodyInput").value;
+  const custom = getTemplates().filter(t => !t.protected);
+  const idx    = custom.findIndex(t => t.id === editingTemplateId);
+  if (idx >= 0) custom[idx] = { ...custom[idx], name, body };
+  saveCustomTemplates(custom);
+  closeEditor();
+  buildTemplatePills();
+  renderEmail();
+}
+
+function deleteCurrentTemplate() {
+  const btn = document.getElementById("deleteTemplateBtn");
+  if (!deleteConfirmPending) {
+    deleteConfirmPending = true;
+    btn.textContent = "Confirm delete";
+    btn.classList.add("danger");
+    setTimeout(() => {
+      if (deleteConfirmPending) {
+        deleteConfirmPending = false;
+        btn.textContent = "Delete";
+        btn.classList.remove("danger");
+      }
+    }, 3000);
+    return;
+  }
+  const custom = getTemplates().filter(t => !t.protected && t.id !== editingTemplateId);
+  saveCustomTemplates(custom);
+  activeTemplateId = "default";
+  localStorage.setItem("rea_active_template", "default");
+  closeEditor();
+  buildTemplatePills();
+  renderEmail();
+}
+
+function createTemplate() {
+  const id     = Math.random().toString(36).slice(2);
+  const t      = { id, name: "New template", body: getDefaultTemplateBody() };
+  const custom = getTemplates().filter(t => !t.protected);
+  custom.push(t);
+  saveCustomTemplates(custom);
+  activeTemplateId = id;
+  localStorage.setItem("rea_active_template", id);
+  buildTemplatePills();
+  renderEmail();
+  openEditor(id);
+}
+
 // ─── Usage & limits ──────────────────────────────
 const TRIAL_LIMIT = 3;
 const DAILY_LIMIT = 20;
