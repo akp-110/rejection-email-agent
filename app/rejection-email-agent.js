@@ -138,6 +138,7 @@ function saveCurrentTemplate() {
   const custom = getTemplates().filter(t => !t.protected);
   const idx    = custom.findIndex(t => t.id === editingTemplateId);
   if (idx >= 0) custom[idx] = { ...custom[idx], name, body };
+  else custom.push({ id: editingTemplateId, name, body });
   saveCustomTemplates(custom);
   closeEditor();
   buildTemplatePills();
