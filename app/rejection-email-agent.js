@@ -306,7 +306,7 @@ function renderEmail() {
   }
 
   const fname    = esc(selected.name.split(" ")[0]);
-  const lastName = esc(selected.name.split(" ")[1].toLowerCase());
+  const lastName = esc((selected.name.split(" ")[1] ?? "").toLowerCase());
   const recordId = esc(selected.id);
   const role     = esc(selected.role);
 
