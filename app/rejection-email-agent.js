@@ -233,7 +233,14 @@ document.getElementById("photoInput")?.addEventListener("change", async (e) => {
   if (!file) return;
 
   const btn = document.getElementById("scanBtn");
+
+  if (!file.type.startsWith("image/")) {
+    setStatus("amber", "Error: please select an image file");
+    return;
+  }
+
   btn.disabled = true;
+  document.getElementById("notesInput").disabled = true;
   setStatus("blue", "Scanning photo…");
 
   try {
@@ -260,6 +267,7 @@ document.getElementById("photoInput")?.addEventListener("change", async (e) => {
   }
 
   btn.disabled = false;
+  document.getElementById("notesInput").disabled = false;
   e.target.value = ""; // reset so same file can be re-selected
 });
 
