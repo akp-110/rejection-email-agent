@@ -171,8 +171,9 @@ function deleteCurrentTemplate() {
 
 function createTemplate() {
   const id     = Math.random().toString(36).slice(2);
-  const t      = { id, name: "New template", body: getDefaultTemplateBody() };
   const custom = getTemplates().filter(t => !t.protected);
+  const name   = "Template " + (custom.length + 1);
+  const t      = { id, name, body: getDefaultTemplateBody() };
   custom.push(t);
   saveCustomTemplates(custom);
   activeTemplateId = id;
