@@ -131,6 +131,7 @@ function renderEmail() {
 
   if (!selected) {
     preview.innerHTML = `<p class="empty-state">Select a candidate and parse notes to see the completed email.</p>`;
+    disableEdit(preview);
     return;
   }
 
@@ -163,6 +164,12 @@ function renderEmail() {
     <div class="email-line">Feedback is important to us and we want to help you in future processes. Thanks again for your time and interest, and best of luck in your search.</div>
     <div class="email-line" style="margin-top:1.25rem;">Best wishes,<br><strong>[Recruiter name]</strong></div>
   `;
+
+  if (parsed.P || parsed.AI || parsed.D) {
+    enableEdit(preview);
+  } else {
+    disableEdit(preview);
+  }
 }
 
 // ─── Parse ───────────────────────────────────────
@@ -221,6 +228,30 @@ async function runParse() {
   }
 
   btn.disabled = false;
+}
+
+// ─── Edit & copy ─────────────────────────────────
+function enableEdit(el) {
+  el.contentEditable = "true";
+  el.classList.add("is-editable");
+  document.getElementById("copyBtn").style.display = "";
+}
+
+function disableEdit(el) {
+  el.contentEditable = "false";
+  el.classList.remove("is-editable");
+  document.getElementById("copyBtn").style.display = "none";
+}
+
+function copyEmail() {
+  const preview = document.getElementById("emailPreview");
+  const btn = document.getElementById("copyBtn");
+  navigator.clipboard.writeText(preview.innerText).then(() => {
+    btn.innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i> Copied';
+    setTimeout(() => {
+      btn.innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i> Copy email';
+    }, 1500);
+  });
 }
 
 // ─── Scan ────────────────────────────────────────
