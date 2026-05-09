@@ -223,5 +223,45 @@ async function runParse() {
   btn.disabled = false;
 }
 
+// ─── Scan ────────────────────────────────────────
+function runScan() {
+  document.getElementById("photoInput").click();
+}
+
+document.getElementById("photoInput")?.addEventListener("change", async (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
+
+  const btn = document.getElementById("scanBtn");
+  btn.disabled = true;
+  setStatus("blue", "Scanning photo…");
+
+  try {
+    const base64 = await new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload  = () => resolve(reader.result.split(",")[1]);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+
+    const res = await fetch("/api/ocr", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ image: base64, mediaType: file.type })
+    });
+
+    const result = await res.json();
+    if (!res.ok) throw new Error(result.error || "OCR error");
+
+    document.getElementById("notesInput").value = result.text;
+    setStatus("green", "Photo scanned — review and edit, then parse");
+  } catch (err) {
+    setStatus("amber", "Error: " + err.message);
+  }
+
+  btn.disabled = false;
+  e.target.value = ""; // reset so same file can be re-selected
+});
+
 buildCandidateGrid();
 renderEmail();
