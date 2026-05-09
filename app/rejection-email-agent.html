@@ -30,12 +30,17 @@
   </div>
 
   <!-- Parse button + status -->
+  <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none" />
   <div class="action-row">
     <button class="parse-btn" id="parseBtn" onclick="runParse()" disabled>
       <i class="ti ti-sparkles" aria-hidden="true"></i>
       Parse notes
     </button>
-<div class="status-row">
+    <button class="parse-btn" id="scanBtn" onclick="runScan()">
+      <i class="ti ti-camera" aria-hidden="true"></i>
+      Scan photo
+    </button>
+    <div class="status-row">
       <div class="dot" id="statusDot"></div>
       <span id="statusText">Select a candidate to begin</span>
     </div>
