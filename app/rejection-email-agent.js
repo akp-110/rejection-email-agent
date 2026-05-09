@@ -248,9 +248,10 @@ function copyEmail() {
   const btn = document.getElementById("copyBtn");
   navigator.clipboard.writeText(preview.innerText).then(() => {
     btn.innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i> Copied';
-    setTimeout(() => {
-      btn.innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i> Copy email';
-    }, 1500);
+    setTimeout(() => { btn.innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i> Copy email'; }, 1500);
+  }).catch(() => {
+    btn.textContent = 'Copy failed';
+    setTimeout(() => { btn.innerHTML = '<i class="ti ti-copy" aria-hidden="true"></i> Copy email'; }, 1500);
   });
 }
 
