@@ -11,6 +11,51 @@ const candidates = [
 
 let selected = null;
 let parsed   = { P: null, AI: null, D: null };
+let activeTemplateId     = localStorage.getItem("rea_active_template") || "default";
+let editingTemplateId    = null;
+let deleteConfirmPending = false;
+
+// ─── Templates ───────────────────────────────────
+function getDefaultTemplateBody() {
+  return `Hi {name},
+
+Thank you for your time interviewing with me — I really enjoyed learning about your experiences.
+
+Unfortunately, we have decided not to proceed with your application on this occasion.
+
+I thought that you {P}. However, for this role we're looking for someone that can demonstrate {AI}. This is important for success in the role and we feel other candidates have been able to demonstrate this more clearly.
+
+I would suggest {D}.
+
+Feedback is important to us and we want to help you in future processes. Thanks again for your time and interest, and best of luck in your search.
+
+Best wishes,
+[Recruiter name]`;
+}
+
+function getTemplates() {
+  let custom = [];
+  try { custom = JSON.parse(localStorage.getItem("rea_templates") || "[]"); }
+  catch { custom = []; }
+  return [{ id: "default", name: "Standard rejection", body: getDefaultTemplateBody(), protected: true }, ...custom];
+}
+
+function saveCustomTemplates(arr) {
+  localStorage.setItem("rea_templates", JSON.stringify(arr));
+}
+
+function getActiveTemplateBody() {
+  if (activeTemplateId === "default") return getDefaultTemplateBody();
+  const t = getTemplates().find(t => t.id === activeTemplateId);
+  return t ? t.body : getDefaultTemplateBody();
+}
+
+function setActiveTemplate(id) {
+  activeTemplateId = id;
+  localStorage.setItem("rea_active_template", id);
+  buildTemplatePills();
+  renderEmail();
+}
 
 // ─── Usage & limits ──────────────────────────────
 const TRIAL_LIMIT = 3;
