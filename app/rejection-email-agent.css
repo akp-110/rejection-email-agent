@@ -20,6 +20,8 @@
   --amber-text: #854F0B;
   --blue-bg: #E6F1FB;
   --blue-text: #185FA5;
+  --blue-border: #93b4f5;
+  --red-text: #ef4444;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -39,6 +41,8 @@
     --amber-text: #FAC775;
     --blue-bg: #042C53;
     --blue-text: #85B7EB;
+    --blue-border: #5B8CDB;
+    --red-text: #FF7875;
   }
 }
 
@@ -412,7 +416,7 @@ hr {
 
 .template-editor {
   background: var(--bg-primary);
-  border: 0.5px solid #93b4f5;
+  border: 0.5px solid var(--blue-border);
   border-radius: var(--radius-lg);
   padding: 1rem 1.25rem;
   margin-bottom: 0.75rem;
@@ -513,8 +517,8 @@ hr {
   transition: color 0.15s;
 }
 
-.template-delete-btn:hover { color: #ef4444; }
-.template-delete-btn.danger { color: #ef4444; font-weight: 500; }
+.template-delete-btn:hover { color: var(--red-text); }
+.template-delete-btn.danger { color: var(--red-text); font-weight: 500; }
 
 /* Email preview */
 .email-preview {
