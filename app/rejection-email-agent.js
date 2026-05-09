@@ -310,15 +310,15 @@ function renderEmail() {
   const recordId = esc(selected.id);
   const role     = esc(selected.role);
 
-  const P  = parsed.P
+  const pSpan  = parsed.P
     ? `<span class="highlight green">${esc(parsed.P)}</span>`
     : `<span class="highlight empty">[positive quality — parse notes to fill]</span>`;
 
-  const AI = parsed.AI
+  const aiSpan = parsed.AI
     ? `<span class="highlight amber">${esc(parsed.AI)}</span>`
     : `<span class="highlight empty">[area for improvement — parse notes to fill]</span>`;
 
-  const D  = parsed.D
+  const dSpan  = parsed.D
     ? `<span class="highlight blue">${esc(parsed.D)}</span>`
     : `<span class="highlight empty">[development tip — parse notes to fill]</span>`;
 
@@ -326,13 +326,22 @@ function renderEmail() {
     <div class="email-meta">
       Record ID: ${recordId} &nbsp;·&nbsp; ${role} &nbsp;·&nbsp; To: ${fname.toLowerCase()}.${lastName}@example.com
     </div>
-    <div class="email-line">Hi ${fname},</div>
-    <div class="email-line">Thank you for your time interviewing with me — I really enjoyed learning about your experiences.</div>
-    <div class="email-line">Unfortunately, we have decided not to proceed with your application on this occasion.</div>
-    <div class="email-line">I thought that you ${P}. However, for this role we're looking for someone that can demonstrate ${AI}. This is important for success in the role and we feel other candidates have been able to demonstrate this more clearly.</div>
-    <div class="email-line">I would suggest ${D}.</div>
-    <div class="email-line">Feedback is important to us and we want to help you in future processes. Thanks again for your time and interest, and best of luck in your search.</div>
-    <div class="email-line" style="margin-top:1.25rem;">Best wishes,<br><strong>[Recruiter name]</strong></div>
+    ${(() => {
+      const paragraphs = esc(getActiveTemplateBody())
+        .split("\n\n")
+        .map(para => {
+          const html = para
+            .replace(/\{name\}/g, fname)
+            .replace(/\{role\}/g, role)
+            .replace(/\{P\}/g, pSpan)
+            .replace(/\{AI\}/g, aiSpan)
+            .replace(/\{D\}/g, dSpan)
+            .replace(/\n/g, "<br>");
+          return `<div class="email-line">${html}</div>`;
+        })
+        .join("");
+      return paragraphs;
+    })()}
   `;
 
   if (parsed.P || parsed.AI || parsed.D) {
