@@ -71,7 +71,7 @@
     <div class="template-actions">
       <div class="template-pills" id="templatePills"></div>
       <div class="template-divider"></div>
-      <button class="copy-btn" id="editTemplateBtn"></button>
+      <button class="copy-btn" id="editTemplateBtn" aria-label="Edit template"></button>
       <button class="copy-btn" id="copyBtn" onclick="copyEmail()" style="display:none">
         <i class="ti ti-copy" aria-hidden="true"></i>
         Copy email
@@ -84,11 +84,11 @@
     <div class="template-editor-header">
       <input class="template-name-input" id="templateNameInput" type="text" placeholder="Template name" />
       <div class="token-chips">
-        <span class="token-chip green" onclick="insertToken('{P}')">{P}</span>
-        <span class="token-chip amber" onclick="insertToken('{AI}')">{AI}</span>
-        <span class="token-chip blue" onclick="insertToken('{D}')">{D}</span>
-        <span class="token-chip" onclick="insertToken('{name}')">{name}</span>
-        <span class="token-chip" onclick="insertToken('{role}')">{role}</span>
+        <button class="token-chip green" onclick="insertToken('{P}')">{P}</button>
+        <button class="token-chip amber" onclick="insertToken('{AI}')">{AI}</button>
+        <button class="token-chip blue" onclick="insertToken('{D}')">{D}</button>
+        <button class="token-chip" onclick="insertToken('{name}')">{name}</button>
+        <button class="token-chip" onclick="insertToken('{role}')">{role}</button>
       </div>
     </div>
     <textarea id="templateBodyInput"></textarea>
