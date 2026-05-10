@@ -1,6 +1,6 @@
 # Rejection Email Agent
 
-I got a rejection email from a company I never interviewed with. The template placeholders hadn't been filled in.
+I got a rejection email that thanked me warmly for my time interviewing — except I'd only submitted an application. We'd never spoken. And the feedback section looked like this:
 
 ```
 "I thought that you {P}. However, for this role we're looking for someone
