@@ -1,19 +1,15 @@
 # Rejection Email Agent
 
-I applied for an AI Automation role at a fintech company. A few days later I got a rejection email that thanked me warmly for my time interviewing — except I'd never interviewed. I'd only submitted an application. We'd never spoken.
+I applied for an AI Automation role and got a rejection email that thanked me warmly for my time interviewing. Except I'd never interviewed — I'd only submitted an application.
 
-The email read as though the recruiter had sat across from me, heard my answers, weighed them up, and written considered feedback. But when I got to the feedback section, it looked like this:
+The feedback section looked like this:
 
 ```
 I thought that you {P}. However, for this role we're looking for someone
 that can demonstrate {AI}. I would suggest {D}.
 ```
 
-The template placeholders hadn't been filled in. The recruiter had the right structure — specific, constructive, designed to actually help the candidate — but hadn't had the time or tool to complete it before hitting send.
-
-I wasn't annoyed. I was curious. The template itself was good. The problem was turning raw interview notes into the polished, grammatically specific phrases that slot into each position. That's the part that takes time and mental effort, and the part most likely to get skipped.
-
-So I built a tool that does it. Paste in raw notes, and Claude extracts the three phrases — a positive quality, an area for improvement, a development tip — phrased to slot directly into the template. The recruiter reviews, copies, and sends.
+The template was good — specific, constructive, designed to actually help. The recruiter just hadn't filled it in. That's the hard part: turning raw interview notes into the polished, grammatically precise phrases that slot into each position. So I built a tool that does it.
 
 The small irony: I was applying for their AI Automation role.
 
