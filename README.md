@@ -1,17 +1,19 @@
 # Rejection Email Agent
 
-I applied for an AI Automation role and got a rejection email that thanked me warmly for my time interviewing. Except I'd never interviewed — I'd only submitted an application.
+Job searching is tough. Standard rejection emails are the norm — and most of us have learned to accept them.
 
-The feedback section looked like this:
+Recently I applied for a role and got one. The recruiter thanked me for my time interviewing, said they'd enjoyed hearing about my experiences, and wished me the best in my search. Pretty standard. Except in this instance, while I had applied for the role, I had not actually interviewed. We'd never spoken.
+
+Had the recruiter made a mistake? Got me confused with another candidate? I wasn't sure. But what I found more interesting was a structured feedback template sitting in the body of the email — with the placeholders still in it:
 
 ```
 I thought that you {P}. However, for this role we're looking for someone
 that can demonstrate {AI}. I would suggest {D}.
 ```
 
-The template was good — specific, constructive, designed to actually help. The recruiter just hadn't filled it in. That's the hard part: turning raw interview notes into the polished, grammatically precise phrases that slot into each position. So I built a tool that does it.
+Had the template not been filled in? Had an automation failed partway through? I couldn't tell. But the structure itself was thoughtful — specific, constructive, the kind of feedback that would actually help a candidate. It just hadn't been completed.
 
-The small irony: I was applying for their AI Automation role.
+The role I'd applied for was an AI Automation position. So I built a tool to explore the problem: paste in raw interview notes, and Claude extracts the three phrases that slot into each position — a positive quality, an area for improvement, a development tip — phrased to fit the template grammatically. The recruiter reviews, copies, and sends. No unfilled placeholders.
 
 ---
 
