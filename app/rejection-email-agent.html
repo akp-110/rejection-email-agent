@@ -22,28 +22,26 @@
 
   <!-- Step 2 -->
   <div class="section-label">2 — recruiter notes</div>
-  <div class="card" style="padding:0.75rem; margin-bottom:1rem;">
+  <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none" />
+  <div class="notes-card">
     <textarea
       id="notesInput"
       placeholder="Paste raw interview notes here… e.g. 'Really strong communication, asked great questions. Struggled with the SQL task, didn't seem comfortable with joins. Would suggest doing some SQL practice on Mode or StrataScratch.'"
     ></textarea>
-  </div>
-
-  <!-- Parse button + status -->
-  <input type="file" id="photoInput" accept="image/*" capture="environment" style="display:none" />
-  <div class="action-row">
-    <button class="parse-btn" id="parseBtn" onclick="runParse()" disabled>
-      <i class="ti ti-sparkles" aria-hidden="true"></i>
-      Parse notes
-    </button>
-    <button class="parse-btn" id="scanBtn" onclick="runScan()">
-      <i class="ti ti-camera" aria-hidden="true"></i>
-      Scan photo
-    </button>
-    <div class="status-row">
-      <div class="dot" id="statusDot"></div>
-      <span id="statusText">Select a candidate to begin</span>
+    <div class="notes-footer">
+      <button class="scan-link" id="scanBtn" onclick="runScan()" title="Take a photo of handwritten interview notes — the text will be extracted and pasted into the notes field automatically">
+        <i class="ti ti-camera" aria-hidden="true"></i>
+        Scan handwritten notes
+      </button>
+      <button class="parse-btn primary" id="parseBtn" onclick="runParse()" disabled>
+        <i class="ti ti-sparkles" aria-hidden="true"></i>
+        Parse notes
+      </button>
     </div>
+  </div>
+  <div class="status-row">
+    <div class="dot" id="statusDot"></div>
+    <span id="statusText">Select a candidate to begin</span>
   </div>
 
   <!-- Step 3 -->
@@ -72,7 +70,7 @@
       <div class="template-pills" id="templatePills"></div>
       <div class="template-divider"></div>
       <button class="copy-btn" id="editTemplateBtn" aria-label="Edit template"></button>
-      <button class="copy-btn" id="copyBtn" onclick="copyEmail()" style="display:none">
+      <button class="copy-btn primary" id="copyBtn" onclick="copyEmail()" style="display:none">
         <i class="ti ti-copy" aria-hidden="true"></i>
         Copy email
       </button>

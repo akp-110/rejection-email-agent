@@ -8,6 +8,14 @@
 [build.environment]
   NODE_VERSION = "18"
 
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "camera=self, microphone=(), geolocation=()"
+
 [[redirects]]
   from = "/"
   to = "/rejection-email-agent.html"

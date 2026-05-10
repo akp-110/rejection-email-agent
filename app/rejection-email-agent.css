@@ -90,7 +90,7 @@ header p {
   font-weight: 500;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--text-tertiary);
+  color: var(--text-secondary);
   margin-bottom: 8px;
 }
 
@@ -161,6 +161,49 @@ header p {
   display: inline-block;
 }
 
+/* Notes card — textarea + action footer as one unit */
+.notes-card {
+  background: var(--bg-primary);
+  border: 0.5px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  margin-bottom: 0.75rem;
+  overflow: hidden;
+}
+
+.notes-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem 0.75rem;
+  border-top: 0.5px solid var(--border-light);
+  background: var(--bg-secondary);
+}
+
+.scan-link {
+  background: transparent;
+  border: none;
+  font-size: 12px;
+  font-family: var(--font-sans);
+  color: var(--text-tertiary);
+  cursor: pointer;
+  padding: 4px 6px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  transition: color 0.15s;
+}
+
+.scan-link:hover {
+  color: var(--text-secondary);
+}
+
+#notesInput {
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  padding: 0.75rem 1rem;
+}
+
 /* Notes textarea */
 textarea {
   width: 100%;
@@ -183,15 +226,6 @@ textarea:focus {
 
 textarea::placeholder {
   color: var(--text-tertiary);
-}
-
-/* Action row */
-.action-row {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 1.25rem;
-  flex-wrap: wrap;
 }
 
 .parse-btn {
@@ -219,12 +253,24 @@ textarea::placeholder {
   cursor: not-allowed;
 }
 
+.parse-btn.primary {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+}
+
+.parse-btn.primary:hover:not(:disabled) {
+  background: var(--text-primary);
+  opacity: 0.85;
+}
+
 .status-row {
   display: flex;
   align-items: center;
   gap: 8px;
   font-size: 13px;
   color: var(--text-secondary);
+  margin-bottom: 1.25rem;
 }
 
 .dot {
@@ -327,6 +373,18 @@ hr {
 
 .copy-btn:hover {
   background: var(--bg-secondary);
+}
+
+.copy-btn.primary {
+  background: var(--text-primary);
+  color: var(--bg-primary);
+  border-color: var(--text-primary);
+  padding: 6px 14px;
+}
+
+.copy-btn.primary:hover {
+  background: var(--text-primary);
+  opacity: 0.85;
 }
 
 /* Editable email preview */

@@ -394,7 +394,7 @@ async function runParse() {
   try {
     const res = await fetch("/api/parse", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-Requested-By": "rea" },
       body: JSON.stringify({ notes })
     });
 
@@ -484,7 +484,7 @@ document.getElementById("photoInput")?.addEventListener("change", async (e) => {
 
     const res = await fetch("/api/ocr", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", "X-Requested-By": "rea" },
       body: JSON.stringify({ image: base64, mediaType: file.type })
     });
 
