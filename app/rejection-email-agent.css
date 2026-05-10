@@ -94,6 +94,14 @@ header p {
   margin-bottom: 8px;
 }
 
+.section-hint {
+  font-size: 12px;
+  font-style: italic;
+  color: var(--text-tertiary);
+  margin-top: -4px;
+  margin-bottom: 10px;
+}
+
 .card {
   background: var(--bg-primary);
   border: 0.5px solid var(--border-light);
