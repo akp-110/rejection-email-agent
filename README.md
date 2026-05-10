@@ -1,30 +1,38 @@
 # Rejection Email Agent
 
-I got a rejection email that thanked me warmly for my time interviewing — except I'd only submitted an application. We'd never spoken. And the feedback section looked like this:
+I applied for an AI Automation role at a fintech company. A few days later I got a rejection email that thanked me warmly for my time interviewing — except I'd never interviewed. I'd only submitted an application. We'd never spoken.
+
+The email read as though the recruiter had sat across from me, heard my answers, weighed them up, and written considered feedback. But when I got to the feedback section, it looked like this:
 
 ```
-"I thought that you {P}. However, for this role we're looking for someone
-that can demonstrate {AI}. I would suggest {D}."
+I thought that you {P}. However, for this role we're looking for someone
+that can demonstrate {AI}. I would suggest {D}.
 ```
 
-I found the underlying problem interesting enough to build something about it. This tool takes raw recruiter interview notes and uses Claude to extract the three phrases that slot into a structured rejection email — so the personalised fields actually get filled in before the email goes out.
+The template placeholders hadn't been filled in. The recruiter had the right structure — specific, constructive, designed to actually help the candidate — but hadn't had the time or tool to complete it before hitting send.
+
+I wasn't annoyed. I was curious. The template itself was good. The problem was turning raw interview notes into the polished, grammatically specific phrases that slot into each position. That's the part that takes time and mental effort, and the part most likely to get skipped.
+
+So I built a tool that does it. Paste in raw notes, and Claude extracts the three phrases — a positive quality, an area for improvement, a development tip — phrased to slot directly into the template. The recruiter reviews, copies, and sends.
+
+The small irony: I was applying for their AI Automation role.
+
+---
 
 ## What it does
 
 1. Select a candidate record
-2. Paste raw interview notes
+2. Paste raw interview notes (or scan a photo of handwritten notes)
 3. Claude extracts three structured fields:
    - **P** — a positive quality ("I thought that you...")
    - **AI** — an area for improvement ("someone that can demonstrate...")
    - **D** — a development tip ("I would suggest...")
-4. Preview and copy the completed email
-
-Notes can also be scanned from a photo of handwritten interview notes via the OCR endpoint.
+4. Preview the completed email, edit if needed, and copy
 
 ## Stack
 
 - Vanilla HTML / CSS / JS — no build step
-- Netlify serverless functions (Node.js) — keep the API key server-side
+- Netlify serverless functions (Node.js) — keeps the API key server-side
 - Claude Haiku 4.5 via the Anthropic API
 - Deployed on Netlify
 
