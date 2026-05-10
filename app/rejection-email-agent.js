@@ -202,7 +202,6 @@ function createTemplate() {
 }
 
 // ─── Usage & limits ──────────────────────────────
-const TRIAL_LIMIT = 3;
 const DAILY_LIMIT = 20;
 
 function getUsage() {
@@ -214,14 +213,6 @@ function saveUsage(u) {
   localStorage.setItem("rea_usage", JSON.stringify(u));
 }
 
-function isSignedIn() { return !!getUsage().email; }
-
-function trialUsesLeft() {
-  const u = getUsage();
-  if (u.email) return Infinity;
-  return Math.max(0, TRIAL_LIMIT - (u.trialCount || 0));
-}
-
 function isDailyLimitHit() {
   const u = getUsage();
   const today = new Date().toISOString().slice(0, 10);
@@ -231,43 +222,10 @@ function isDailyLimitHit() {
 function recordUse() {
   const u = getUsage();
   const today = new Date().toISOString().slice(0, 10);
-  if (!u.email) u.trialCount = (u.trialCount || 0) + 1;
   if (u.dailyDate !== today) { u.dailyDate = today; u.dailyCount = 1; }
   else { u.dailyCount = (u.dailyCount || 0) + 1; }
   saveUsage(u);
 }
-
-// ─── Signup modal ────────────────────────────────
-function showModal() {
-  document.getElementById("modalOverlay").style.display = "flex";
-  setTimeout(() => document.getElementById("signupEmail").focus(), 50);
-}
-
-function hideModal() {
-  document.getElementById("modalOverlay").style.display = "none";
-}
-
-function handleSignup() {
-  const email = document.getElementById("signupEmail").value.trim();
-  if (!email || !email.includes("@")) {
-    document.getElementById("signupEmail").classList.add("input-error");
-    return;
-  }
-  const u = getUsage();
-  u.email = email;
-  saveUsage(u);
-  hideModal();
-  runParse();
-}
-
-document.getElementById("signupEmail")?.addEventListener("keydown", e => {
-  e.target.classList.remove("input-error");
-  if (e.key === "Enter") handleSignup();
-});
-
-document.getElementById("modalOverlay")?.addEventListener("click", e => {
-  if (e.target === e.currentTarget) hideModal();
-});
 
 // ─── Helpers ─────────────────────────────────────
 function esc(str) {
@@ -381,11 +339,6 @@ async function runParse() {
     return;
   }
 
-  if (trialUsesLeft() === 0) {
-    showModal();
-    return;
-  }
-
   const btn = document.getElementById("parseBtn");
   btn.disabled = true;
   setStatus("blue", "Parsing notes with Claude…");
@@ -411,14 +364,7 @@ async function runParse() {
     });
 
     recordUse();
-
-    const left = trialUsesLeft();
-    if (!isSignedIn() && isFinite(left)) {
-      const noun = left === 1 ? "parse" : "parses";
-      setStatus("green", `Parsed · ${selected.id} · ${left} free ${noun} remaining`);
-    } else {
-      setStatus("green", `Parsed successfully · ${selected.id}`);
-    }
+    setStatus("green", `Parsed successfully · ${selected.id}`);
 
     renderEmail();
 
