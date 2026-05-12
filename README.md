@@ -30,30 +30,36 @@ The role I'd applied for was an AI Automation position. So I built a tool to exp
 ## Stack
 
 - Vanilla HTML / CSS / JS — no build step
-- Netlify serverless functions (Node.js) — keeps the API key server-side
+- Cloudflare Pages Functions (Web API format) — keeps the API key server-side
 - Claude Haiku 4.5 via the Anthropic API
-- Deployed on Netlify
+- Deployed on Cloudflare Pages
 
 ## Local development
 
 ```bash
-npm install -g netlify-cli
+npm install -g wrangler
 ```
 
 Create a `.env` file:
 
 ```
 ANTHROPIC_API_KEY=your_api_key_here
-ALLOWED_ORIGIN=http://localhost:8888
+ALLOWED_ORIGIN=http://localhost:8788
 ```
 
 Then run:
 
 ```bash
-netlify dev
+wrangler pages dev app
 ```
 
-The app is served at `http://localhost:8888`.
+The app is served at `http://localhost:8788`.
+
+## Deploy
+
+```bash
+wrangler pages deploy app --project-name=rejection-email-agent
+```
 
 ## Structure
 
@@ -62,11 +68,11 @@ app/
   rejection-email-agent.html
   rejection-email-agent.css
   rejection-email-agent.js
-netlify/
-  functions/
-    parse.js   # extracts P, AI, D from notes
-    ocr.js     # transcribes handwritten notes from an image
-netlify.toml
+  _redirects                   # / → rejection-email-agent.html
+  _headers                     # security headers
+functions/
+  api/
+    parse.js                   # extracts P, AI, D from notes
 ```
 
 ## Environment variables
