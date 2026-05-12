@@ -19,7 +19,8 @@ app/                          # static frontend (Cloudflare Pages publish dir)
   _headers                    # security headers
 functions/
   api/
-    parse.js                  # Pages Function — holds the API key, route: /api/parse
+    parse.js                  # Pages Function — route: /api/parse, extracts P/AI/D from notes
+    ocr.js                    # Pages Function — route: /api/ocr, transcribes handwritten images
 .env                          # ANTHROPIC_API_KEY (local only)
 ```
 

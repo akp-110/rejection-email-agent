@@ -1,5 +1,4 @@
 .env
-.netlify/
 .playwright-mcp/
 .superpowers/
 node_modules/

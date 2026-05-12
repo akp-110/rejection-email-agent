@@ -73,6 +73,7 @@ app/
 functions/
   api/
     parse.js                   # extracts P, AI, D from notes
+    ocr.js                     # transcribes handwritten notes from an image
 ```
 
 ## Environment variables
