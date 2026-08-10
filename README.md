@@ -1,6 +1,6 @@
 # Rejection Email Agent
 
-Job searching is tough. Standard rejection emails are the norm — and most of us have learned to accept them.
+Candidate feedback often starts as messy, unstructured interview notes and ends in a templated email — a handoff where useful detail can easily be lost. This project explores an AI-assisted workflow for turning those notes, including photos of handwritten notes, into specific, constructive feedback that a recruiter reviews before sending.
 
 Recently I applied for a role and got one. The recruiter thanked me for my time interviewing, said they'd enjoyed hearing about my experiences, and wished me the best in my search. Pretty standard. Except in this instance, while I had applied for the role, I had not actually interviewed. We'd never spoken.
 
